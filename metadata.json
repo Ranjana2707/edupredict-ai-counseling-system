@@ -1,0 +1,8 @@
+{
+  "name": "AI Dropout Prediction System",
+  "description": "An advanced, enterprise-grade AI prediction center with SHAP explainability, recommendation engines, and individual student risk telemetry.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

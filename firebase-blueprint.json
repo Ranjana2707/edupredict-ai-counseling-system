@@ -1,0 +1,83 @@
+{
+  "entities": {
+    "CounselingNote": {
+      "title": "CounselingNote",
+      "description": "Confidential intervention notes logged by advisors, counselors, faculty, or admins for specific students.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the note"
+        },
+        "studentId": {
+          "type": "string",
+          "description": "Unique identifier of the student"
+        },
+        "studentName": {
+          "type": "string",
+          "description": "Name of the student"
+        },
+        "authorId": {
+          "type": "string",
+          "description": "The UID of the advisor/counselor who created this note"
+        },
+        "authorName": {
+          "type": "string",
+          "description": "The full name of the author"
+        },
+        "authorRole": {
+          "type": "string",
+          "description": "The role of the author (counselor, faculty, admin, advisor)"
+        },
+        "sessionDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time when the counseling session took place"
+        },
+        "urgency": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"],
+          "description": "Urgency flag for the counseling session note"
+        },
+        "notes": {
+          "type": "string",
+          "description": "The detailed text content of the counseling intervention note"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of intervention category"
+        },
+        "outcome": {
+          "type": "string",
+          "description": "The agreed action plan or outcome"
+        },
+        "followUpDate": {
+          "type": "string",
+          "description": "Scheduled follow-up date for next review"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["open", "in_progress", "resolved"],
+          "description": "Current status of the counseling intervention"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The modification timestamp"
+        }
+      },
+      "required": ["id", "studentId", "studentName", "authorId", "authorName", "authorRole", "sessionDate", "urgency", "notes", "type", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/counseling_notes/{noteId}": {
+      "schema": "CounselingNote",
+      "description": "Confidential counseling logs and intervention remarks collection"
+    }
+  }
+}

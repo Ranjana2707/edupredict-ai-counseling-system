@@ -1,0 +1,548 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Reference CSS variables so that we can switch them dynamically in JS / CSS! */
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+  --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  --color-surface-variant: var(--surface-variant);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-inverse-primary: var(--inverse-primary);
+
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+
+  --color-primary-fixed: var(--primary-fixed);
+  --color-primary-fixed-dim: var(--primary-fixed-dim);
+  --color-on-primary-fixed: var(--on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--on-primary-fixed-variant);
+  --color-secondary-fixed: var(--secondary-fixed);
+  --color-secondary-fixed-dim: var(--secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--on-secondary-fixed-variant);
+  --color-tertiary-fixed: var(--tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--on-tertiary-fixed-variant);
+
+  /* Rounded corners */
+  --radius-sm: 0.25rem;
+  --radius-default: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+}
+
+@utility p-xs { padding: 4px; }
+@utility p-sm { padding: 8px; }
+@utility p-md { padding: 16px; }
+@utility p-lg { padding: 24px; }
+@utility p-xl { padding: 40px; }
+@utility p-2xl { padding: 64px; }
+
+@utility pt-xs { padding-top: 4px; }
+@utility pt-sm { padding-top: 8px; }
+@utility pt-md { padding-top: 16px; }
+@utility pt-lg { padding-top: 24px; }
+@utility pt-xl { padding-top: 40px; }
+@utility pt-2xl { padding-top: 64px; }
+
+@utility pb-xs { padding-bottom: 4px; }
+@utility pb-sm { padding-bottom: 8px; }
+@utility pb-md { padding-bottom: 16px; }
+@utility pb-lg { padding-bottom: 24px; }
+@utility pb-xl { padding-bottom: 40px; }
+@utility pb-2xl { padding-bottom: 64px; }
+
+@utility pl-xs { padding-left: 4px; }
+@utility pl-sm { padding-left: 8px; }
+@utility pl-md { padding-left: 16px; }
+@utility pl-lg { padding-left: 24px; }
+@utility pl-xl { padding-left: 40px; }
+@utility pl-2xl { padding-left: 64px; }
+
+@utility pr-xs { padding-right: 4px; }
+@utility pr-sm { padding-right: 8px; }
+@utility pr-md { padding-right: 16px; }
+@utility pr-lg { padding-right: 24px; }
+@utility pr-xl { padding-right: 40px; }
+@utility pr-2xl { padding-right: 64px; }
+
+@utility px-xs { padding-left: 4px; padding-right: 4px; }
+@utility px-sm { padding-left: 8px; padding-right: 8px; }
+@utility px-md { padding-left: 16px; padding-right: 16px; }
+@utility px-lg { padding-left: 24px; padding-right: 24px; }
+@utility px-xl { padding-left: 40px; padding-right: 40px; }
+@utility px-2xl { padding-left: 64px; padding-right: 64px; }
+
+@utility py-xs { padding-top: 4px; padding-bottom: 4px; }
+@utility py-sm { padding-top: 8px; padding-bottom: 8px; }
+@utility py-md { padding-top: 16px; padding-bottom: 16px; }
+@utility py-lg { padding-top: 24px; padding-bottom: 24px; }
+@utility py-xl { padding-top: 40px; padding-bottom: 40px; }
+@utility py-2xl { padding-top: 64px; padding-bottom: 64px; }
+
+@utility m-xs { margin: 4px; }
+@utility m-sm { margin: 8px; }
+@utility m-md { margin: 16px; }
+@utility m-lg { margin: 24px; }
+@utility m-xl { margin: 40px; }
+@utility m-2xl { margin: 64px; }
+
+@utility mt-xs { margin-top: 4px; }
+@utility mt-sm { margin-top: 8px; }
+@utility mt-md { margin-top: 16px; }
+@utility mt-lg { margin-top: 24px; }
+@utility mt-xl { margin-top: 40px; }
+@utility mt-2xl { margin-top: 64px; }
+
+@utility mb-xs { margin-bottom: 4px; }
+@utility mb-sm { margin-bottom: 8px; }
+@utility mb-md { margin-bottom: 16px; }
+@utility mb-lg { margin-bottom: 24px; }
+@utility mb-xl { margin-bottom: 40px; }
+@utility mb-2xl { margin-bottom: 64px; }
+
+@utility ml-xs { margin-left: 4px; }
+@utility ml-sm { margin-left: 8px; }
+@utility ml-md { margin-left: 16px; }
+@utility ml-lg { margin-left: 24px; }
+@utility ml-xl { margin-left: 40px; }
+@utility ml-2xl { margin-left: 64px; }
+
+@utility mr-xs { margin-right: 4px; }
+@utility mr-sm { margin-right: 8px; }
+@utility mr-md { margin-right: 16px; }
+@utility mr-lg { margin-right: 24px; }
+@utility mr-xl { margin-right: 40px; }
+@utility mr-2xl { margin-right: 64px; }
+
+@utility mx-xs { margin-left: 4px; margin-right: 4px; }
+@utility mx-sm { margin-left: 8px; margin-right: 8px; }
+@utility mx-md { margin-left: 16px; margin-right: 16px; }
+@utility mx-lg { margin-left: 24px; margin-right: 24px; }
+@utility mx-xl { margin-left: 40px; margin-right: 40px; }
+@utility mx-2xl { margin-left: 64px; margin-right: 64px; }
+
+@utility my-xs { margin-top: 4px; margin-bottom: 4px; }
+@utility my-sm { margin-top: 8px; margin-bottom: 8px; }
+@utility my-md { margin-top: 16px; margin-bottom: 16px; }
+@utility my-lg { margin-top: 24px; margin-bottom: 24px; }
+@utility my-xl { margin-top: 40px; margin-bottom: 40px; }
+@utility my-2xl { margin-top: 64px; margin-bottom: 64px; }
+
+@utility gap-xs { gap: 4px; }
+@utility gap-sm { gap: 8px; }
+@utility gap-md { gap: 16px; }
+@utility gap-lg { gap: 24px; }
+@utility gap-xl { gap: 40px; }
+@utility gap-2xl { gap: 64px; }
+
+@utility gap-x-xs { column-gap: 4px; }
+@utility gap-x-sm { column-gap: 8px; }
+@utility gap-x-md { column-gap: 16px; }
+@utility gap-x-lg { column-gap: 24px; }
+@utility gap-x-xl { column-gap: 40px; }
+@utility gap-x-2xl { column-gap: 64px; }
+
+@utility gap-y-xs { row-gap: 4px; }
+@utility gap-y-sm { row-gap: 8px; }
+@utility gap-y-md { row-gap: 16px; }
+@utility gap-y-lg { row-gap: 24px; }
+@utility gap-y-xl { row-gap: 40px; }
+@utility gap-y-2xl { row-gap: 64px; }
+
+:root {
+  /* ==========================================
+     60-30-10 COLOR RULE DESIGN SYSTEM (LIGHT)
+     ========================================== */
+
+  /* 60% DOMINANT CANVAS: Large neutral backgrounds and layout wraps */
+  --background: #f8fafc;
+  --on-background: #0f172a;
+  --surface: #f8fafc;
+  --surface-dim: #f1f5f9;
+  --surface-bright: #f8fafc;
+
+  /* 30% SECONDARY STRUCTURE: Content surfaces, sidebars, borders, reading text */
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f1f5f9;
+  --surface-container: #e2e8f0;
+  --surface-container-high: #cbd5e1;
+  --surface-container-highest: #94a3b8;
+  --surface-variant: #e2e8f0;
+  --on-surface: #0f172a;
+  --on-surface-variant: #475569;
+  --inverse-surface: #1e293b;
+  --inverse-on-surface: #f8fafc;
+  --outline: #64748b;
+  --outline-variant: #e2e8f0;
+
+  /* 10% ACCENT SYSTEM: High-contrast focus actions, dynamic CTA states, vital highlights */
+  --primary: #2563eb;
+  --on-primary: #ffffff;
+  --primary-container: #3b82f6;
+  --on-primary-container: #f0fdf4;
+  --inverse-primary: #93c5fd;
+
+  --secondary: #475569;
+  --on-secondary: #ffffff;
+  --secondary-container: #f1f5f9;
+  --on-secondary-container: #475569;
+
+  --tertiary: #0ea5e9;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #0284c7;
+  --on-tertiary-container: #f0f9ff;
+
+  --error: #ef4444;
+  --on-error: #ffffff;
+  --error-container: #fee2e2;
+  --on-error-container: #991b1b;
+
+  --primary-fixed: #dbe1ff;
+  --primary-fixed-dim: #b4c5ff;
+  --on-primary-fixed: #00174b;
+  --on-primary-fixed-variant: #003ea8;
+  --secondary-fixed: #dae2fd;
+  --secondary-fixed-dim: #bec6e0;
+  --on-secondary-fixed: #131b2e;
+  --on-secondary-fixed-variant: #3f465c;
+  --tertiary-fixed: #acedff;
+  --tertiary-fixed-dim: #4cd7f6;
+  --on-tertiary-fixed: #001f26;
+  --on-tertiary-fixed-variant: #004e5c;
+}
+
+.dark {
+  /* ==========================================
+     60-30-10 COLOR RULE DESIGN SYSTEM (DARK)
+     ========================================== */
+
+  /* 60% DOMINANT CANVAS: Deep midnight dark background wrap */
+  --background: #090d16;
+  --on-background: #f8fafc;
+  --surface: #0b111e;
+  --surface-dim: #060a12;
+  --surface-bright: #0f172a;
+
+  /* 30% SECONDARY STRUCTURE: Slate dark cards, sidebars, secondary texts, and subtle separators */
+  --surface-container-lowest: #111827;
+  --surface-container-low: #0f172a;
+  --surface-container: #1e293b;
+  --surface-container-high: #334155;
+  --surface-container-highest: #475569;
+  --surface-variant: #1e293b;
+  --on-surface: #f8fafc;
+  --on-surface-variant: #94a3b8;
+  --inverse-surface: #f8fafc;
+  --inverse-on-surface: #090d16;
+  --outline: #475569;
+  --outline-variant: #334155;
+
+  /* 10% ACCENT SYSTEM: High-contrast cyan/indigo glow accents, pristine active feedback */
+  --primary: #3b82f6;
+  --on-primary: #ffffff;
+  --primary-container: #1d4ed8;
+  --on-primary-container: #eff6ff;
+  --inverse-primary: #2563eb;
+
+  --secondary: #cbd5e1;
+  --on-secondary: #0f172a;
+  --secondary-container: #1e293b;
+  --on-secondary-container: #cbd5e1;
+
+  --tertiary: #06b6d4;
+  --on-tertiary: #083344;
+  --tertiary-container: #0891b2;
+  --on-tertiary-container: #ecfeff;
+
+  --error: #f87171;
+  --on-error: #450a0a;
+  --error-container: #7f1d1d;
+  --on-error-container: #fef2f2;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--on-background);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Glassmorphism effects */
+.glass-panel {
+  background: rgba(var(--surface-container-lowest), 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--outline-variant);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Shimmer animations */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ==========================================
+   CLAY UI / CLAYMORPHISM DESIGN SYSTEM
+   ========================================== */
+
+/* 1. Tailwind @utility declarations for explicit class usage */
+@utility clay-card {
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  box-shadow: 
+    8px 16px 32px rgba(15, 23, 42, 0.04),
+    inset -8px -8px 16px rgba(15, 23, 42, 0.04), 
+    inset 8px 8px 16px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .clay-card {
+  background-color: rgba(17, 24, 39, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 
+    8px 16px 32px rgba(0, 0, 0, 0.4),
+    inset -8px -8px 16px rgba(0, 0, 0, 0.5), 
+    inset 8px 8px 16px rgba(255, 255, 255, 0.05);
+}
+
+@utility clay-btn-primary {
+  background-image: none !important;
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 
+    0 8px 16px rgba(37, 99, 235, 0.15),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.18), 
+    inset 4px 4px 8px rgba(255, 255, 255, 0.25) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dark .clay-btn-primary {
+  background-color: #3b82f6 !important;
+  box-shadow: 
+    0 8px 16px rgba(59, 130, 246, 0.25),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.4), 
+    inset 4px 4px 8px rgba(255, 255, 255, 0.15) !important;
+}
+
+@utility clay-btn-secondary {
+  background-image: none !important;
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.02),
+    inset -3px -3px 6px rgba(15, 23, 42, 0.05), 
+    inset 3px 3px 6px rgba(255, 255, 255, 0.9) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dark .clay-btn-secondary {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.03) !important;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.25),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.4), 
+    inset 3px 3px 6px rgba(255, 255, 255, 0.04) !important;
+}
+
+@utility clay-input {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  border-radius: 14px !important;
+  box-shadow: 
+    inset 2px 2px 4px rgba(15, 23, 42, 0.06),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dark .clay-input {
+  background-color: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.02) !important;
+}
+
+/* 2. Global Automated Overrides when .clay-ui root class is active */
+
+/* Cards override */
+.clay-ui .rounded-lg.border.bg-surface-container-lowest,
+.clay-ui .rounded-xl.border.bg-surface-container-lowest,
+.clay-ui .rounded-2xl.border.bg-surface-container-lowest {
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  box-shadow: 
+    8px 16px 32px rgba(15, 23, 42, 0.04),
+    inset -8px -8px 16px rgba(15, 23, 42, 0.04), 
+    inset 8px 8px 16px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark.clay-ui .rounded-lg.border.bg-surface-container-lowest,
+.dark.clay-ui .rounded-xl.border.bg-surface-container-lowest,
+.dark.clay-ui .rounded-2xl.border.bg-surface-container-lowest {
+  background-color: rgba(17, 24, 39, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 
+    8px 16px 32px rgba(0, 0, 0, 0.4),
+    inset -8px -8px 16px rgba(0, 0, 0, 0.5), 
+    inset 8px 8px 16px rgba(255, 255, 255, 0.05);
+}
+
+/* Primary buttons override */
+.clay-ui button.bg-gradient-to-r.from-blue-600 {
+  background-image: none !important;
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 
+    0 8px 16px rgba(37, 99, 235, 0.15),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.18), 
+    inset 4px 4px 8px rgba(255, 255, 255, 0.25) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.dark.clay-ui button.bg-gradient-to-r.from-blue-600 {
+  background-color: #3b82f6 !important;
+  box-shadow: 
+    0 8px 16px rgba(59, 130, 246, 0.25),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.4), 
+    inset 4px 4px 8px rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Secondary/Slate buttons override */
+.clay-ui button.bg-slate-100 {
+  background-image: none !important;
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.02),
+    inset -3px -3px 6px rgba(15, 23, 42, 0.05), 
+    inset 3px 3px 6px rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark.clay-ui button.bg-slate-800 {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.03) !important;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.25),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.4), 
+    inset 3px 3px 6px rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Text & Select inputs override */
+.clay-ui input[type="text"],
+.clay-ui input[type="email"],
+.clay-ui input[type="password"],
+.clay-ui input[type="tel"],
+.clay-ui select {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  border-radius: 14px !important;
+  box-shadow: 
+    inset 2px 2px 4px rgba(15, 23, 42, 0.06),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark.clay-ui input[type="text"],
+.dark.clay-ui input[type="email"],
+.dark.clay-ui input[type="password"],
+.dark.clay-ui input[type="tel"],
+.dark.clay-ui select {
+  background-color: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Soft 3D floating effect for badges & indicators */
+.clay-ui .rounded-full.border {
+  box-shadow: 
+    2px 4px 8px rgba(0, 0, 0, 0.02),
+    inset -1px -1px 3px rgba(0, 0, 0, 0.05),
+    inset 1px 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+.dark.clay-ui .rounded-full.border {
+  box-shadow: 
+    2px 4px 8px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 3px rgba(0, 0, 0, 0.3),
+    inset 1px 1px 3px rgba(255, 255, 255, 0.05);
+}
+
+/* Interactive hover scales */
+.clay-ui button:active {
+  transform: scale(0.96) translateY(1px) !important;
+}
+

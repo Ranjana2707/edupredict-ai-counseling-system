@@ -1,0 +1,613 @@
+{
+  "users": [
+    {
+      "id": "EP-ADMIN-01",
+      "name": "Dr. John Doe",
+      "email": "admin@university.edu",
+      "password": "password123",
+      "role": "admin",
+      "avatarUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+      "department": "Institutional Intelligence",
+      "status": "active",
+      "isLocked": false,
+      "passwordResetRequired": false,
+      "createdAt": "2026-09-08T12:59:08.454Z",
+      "lastLogin": "2026-09-08T12:59:08.456Z"
+    },
+    {
+      "id": "EP-FACULTY-02",
+      "name": "Dr. Sarah Jenkins",
+      "email": "faculty@university.edu",
+      "password": "password123",
+      "role": "faculty",
+      "avatarUrl": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150",
+      "department": "Computer Science",
+      "status": "active",
+      "isLocked": false,
+      "passwordResetRequired": false,
+      "createdAt": "2026-09-08T12:59:08.456Z",
+      "lastLogin": "2026-09-08T12:59:08.456Z"
+    },
+    {
+      "id": "EP-COUNSELOR-03",
+      "name": "Dr. Aris Thorne",
+      "email": "counselor@university.edu",
+      "password": "password123",
+      "role": "counselor",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+      "department": "Student Care",
+      "status": "active",
+      "isLocked": false,
+      "passwordResetRequired": false,
+      "createdAt": "2026-09-08T12:59:08.456Z",
+      "lastLogin": "2026-09-08T12:59:08.456Z"
+    },
+    {
+      "id": "EP-2024-8842",
+      "name": "Marcus Thorne",
+      "email": "student@university.edu",
+      "password": "password123",
+      "role": "student",
+      "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
+      "department": "Data Science",
+      "status": "active",
+      "isLocked": false,
+      "passwordResetRequired": false,
+      "createdAt": "2026-09-08T12:59:08.456Z",
+      "lastLogin": "2026-09-08T12:59:08.456Z"
+    },
+    {
+      "id": "EP-STUDENT-387",
+      "name": "Marcus Thorne",
+      "email": "ranjanasingh3984@gmail.com",
+      "password": "password123",
+      "role": "student",
+      "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
+      "department": "Data Science",
+      "status": "active",
+      "isLocked": false,
+      "passwordResetRequired": false,
+      "createdAt": "2026-09-08T13:23:42.507Z",
+      "lastLogin": "2026-09-08T13:23:42.507Z"
+    }
+  ],
+  "students": [
+    {
+      "id": "ST-2026-98",
+      "name": "Marcus Thorne",
+      "email": "student@university.edu",
+      "phoneNumber": "+1 (555) 019-2834",
+      "role": "student",
+      "department": "Computer Science & Engineering",
+      "semester": "6th Semester",
+      "cgpa": 3.42,
+      "overallAttendance": 74.2,
+      "riskScore": 42,
+      "dropoutProbability": 42,
+      "pendingAssignments": 3,
+      "upcomingCounseling": 1,
+      "achievements": [
+        "Dean's Honor List - Fall 2024",
+        "First Place - Annual University Hackathon 2025",
+        "IEEE Student Branch Active Member"
+      ],
+      "subjectMarks": [
+        {
+          "subjectCode": "CS-301",
+          "subjectName": "Advanced Algorithms",
+          "internalMarks": 62,
+          "totalInternal": 100,
+          "examMarks": 65,
+          "totalExam": 100
+        },
+        {
+          "subjectCode": "CS-304",
+          "subjectName": "Distributed Systems",
+          "internalMarks": 58,
+          "totalInternal": 100,
+          "examMarks": 60,
+          "totalExam": 100
+        }
+      ],
+      "attendance": {
+        "overall": 74.2,
+        "subjects": [
+          {
+            "code": "CS-301",
+            "name": "Advanced Algorithms",
+            "percentage": 68,
+            "attended": 17,
+            "total": 25,
+            "required": 75
+          },
+          {
+            "code": "CS-302",
+            "name": "Neural Networks & Deep Learning",
+            "percentage": 82,
+            "attended": 23,
+            "total": 28,
+            "required": 75
+          },
+          {
+            "code": "CS-303",
+            "name": "Software Engineering & Agile",
+            "percentage": 78,
+            "attended": 21,
+            "total": 27,
+            "required": 75
+          },
+          {
+            "code": "CS-304",
+            "name": "Distributed Systems",
+            "percentage": 71,
+            "attended": 20,
+            "total": 28,
+            "required": 75
+          },
+          {
+            "code": "CS-305",
+            "name": "Technical Communications",
+            "percentage": 90,
+            "attended": 18,
+            "total": 20,
+            "required": 75
+          }
+        ],
+        "monthlyTrend": [
+          {
+            "month": "Jan",
+            "percentage": 88
+          },
+          {
+            "month": "Feb",
+            "percentage": 82
+          },
+          {
+            "month": "Mar",
+            "percentage": 76
+          },
+          {
+            "month": "Apr",
+            "percentage": 74
+          },
+          {
+            "month": "May",
+            "percentage": 68
+          },
+          {
+            "month": "Jun",
+            "percentage": 74
+          }
+        ],
+        "heatmapData": [
+          {
+            "date": "2026-07-01",
+            "status": "present"
+          },
+          {
+            "date": "2026-07-02",
+            "status": "present"
+          },
+          {
+            "date": "2026-07-03",
+            "status": "absent"
+          },
+          {
+            "date": "2026-07-06",
+            "status": "present"
+          },
+          {
+            "date": "2026-07-07",
+            "status": "present"
+          },
+          {
+            "date": "2026-07-08",
+            "status": "absent"
+          },
+          {
+            "date": "2026-07-09",
+            "status": "present"
+          },
+          {
+            "date": "2026-07-10",
+            "status": "present"
+          }
+        ],
+        "alerts": [
+          "Attendance warning in CS-301 (68%): 2 more consecutive absences will trigger a warning alert.",
+          "Distributed Systems attendance (71%) is slightly below recommended safe target."
+        ]
+      },
+      "academics": {
+        "cgpa": 3.42,
+        "semesterGpa": [
+          {
+            "semester": "Semester 1",
+            "gpa": 3.65
+          },
+          {
+            "semester": "Semester 2",
+            "gpa": 3.48
+          },
+          {
+            "semester": "Semester 3",
+            "gpa": 3.52
+          },
+          {
+            "semester": "Semester 4",
+            "gpa": 3.21
+          },
+          {
+            "semester": "Semester 5",
+            "gpa": 3.42
+          }
+        ],
+        "subjectMarks": [
+          {
+            "subject": "Advanced Algorithms",
+            "internal": 22,
+            "external": 68,
+            "classAverage": 74
+          },
+          {
+            "subject": "Neural Networks & Deep Learning",
+            "internal": 28,
+            "external": 84,
+            "classAverage": 78
+          },
+          {
+            "subject": "Software Engineering & Agile",
+            "internal": 26,
+            "external": 79,
+            "classAverage": 80
+          },
+          {
+            "subject": "Distributed Systems",
+            "internal": 21,
+            "external": 70,
+            "classAverage": 72
+          },
+          {
+            "subject": "Technical Communications",
+            "internal": 29,
+            "external": 92,
+            "classAverage": 85
+          }
+        ],
+        "stats": {
+          "totalCredits": 112,
+          "passedCredits": 112,
+          "backlogs": 0,
+          "classRank": "Top 15%"
+        }
+      }
+    },
+    {
+      "id": "ST-2026-101",
+      "name": "Elena Rostova",
+      "email": "elena.rostova@university.edu",
+      "phoneNumber": "+1 (555) 124-7856",
+      "role": "student",
+      "department": "Computer Science & Engineering",
+      "semester": "6th Semester",
+      "cgpa": 2.15,
+      "overallAttendance": 62.5,
+      "riskScore": 82,
+      "dropoutProbability": 82,
+      "pendingAssignments": 5,
+      "upcomingCounseling": 2,
+      "achievements": [],
+      "subjectMarks": [
+        {
+          "subjectCode": "CS-301",
+          "subjectName": "Advanced Algorithms",
+          "internalMarks": 48,
+          "totalInternal": 100,
+          "examMarks": 50,
+          "totalExam": 100
+        },
+        {
+          "subjectCode": "CS-304",
+          "subjectName": "Distributed Systems",
+          "internalMarks": 42,
+          "totalInternal": 100,
+          "examMarks": 45,
+          "totalExam": 100
+        }
+      ],
+      "attendance": {
+        "overall": 62.5,
+        "subjects": [
+          {
+            "code": "CS-301",
+            "name": "Advanced Algorithms",
+            "percentage": 55,
+            "attended": 11,
+            "total": 20,
+            "required": 75
+          },
+          {
+            "code": "CS-304",
+            "name": "Distributed Systems",
+            "percentage": 70,
+            "attended": 14,
+            "total": 20,
+            "required": 75
+          }
+        ],
+        "monthlyTrend": [
+          {
+            "month": "Jan",
+            "percentage": 75
+          },
+          {
+            "month": "Feb",
+            "percentage": 70
+          },
+          {
+            "month": "Mar",
+            "percentage": 65
+          },
+          {
+            "month": "Apr",
+            "percentage": 60
+          },
+          {
+            "month": "May",
+            "percentage": 58
+          },
+          {
+            "month": "Jun",
+            "percentage": 62
+          }
+        ],
+        "heatmapData": [],
+        "alerts": [
+          "High Risk Dropout Warning: Attendance has sunk to 62.5% overall."
+        ]
+      },
+      "academics": {
+        "cgpa": 2.15,
+        "semesterGpa": [
+          {
+            "semester": "Semester 1",
+            "gpa": 2.5
+          },
+          {
+            "semester": "Semester 2",
+            "gpa": 2.3
+          },
+          {
+            "semester": "Semester 3",
+            "gpa": 2.2
+          },
+          {
+            "semester": "Semester 4",
+            "gpa": 2.1
+          },
+          {
+            "semester": "Semester 5",
+            "gpa": 2.15
+          }
+        ],
+        "subjectMarks": [
+          {
+            "subject": "Advanced Algorithms",
+            "internal": 14,
+            "external": 48,
+            "classAverage": 74
+          },
+          {
+            "subject": "Distributed Systems",
+            "internal": 12,
+            "external": 42,
+            "classAverage": 72
+          }
+        ],
+        "stats": {
+          "totalCredits": 112,
+          "passedCredits": 96,
+          "backlogs": 2,
+          "classRank": "Bottom 10%"
+        }
+      }
+    }
+  ],
+  "departments": [
+    {
+      "id": "DEP-001",
+      "name": "Computer Science & Engineering",
+      "code": "CSE",
+      "hod": "Dr. Alan Turing",
+      "studentCount": 24,
+      "staffCount": 8,
+      "budget": "$180,000",
+      "riskPercentage": 21.5
+    },
+    {
+      "id": "DEP-002",
+      "name": "Electrical & Physics Eng",
+      "code": "EEPE",
+      "hod": "Dr. Nikola Tesla",
+      "studentCount": 18,
+      "staffCount": 6,
+      "budget": "$150,000",
+      "riskPercentage": 11.1
+    }
+  ],
+  "assignments": [
+    {
+      "id": "A1",
+      "title": "Dynamic Programming Optimization",
+      "subject": "Advanced Algorithms",
+      "dueDate": "2026-07-15",
+      "status": "pending",
+      "progress": 35
+    },
+    {
+      "id": "A2",
+      "title": "Paxos Implementation Project",
+      "subject": "Distributed Systems",
+      "dueDate": "2026-07-20",
+      "status": "pending",
+      "progress": 10
+    }
+  ],
+  "sessions": [
+    {
+      "id": "S1",
+      "studentName": "Marcus Thorne",
+      "counselorName": "Dr. Aris Thorne",
+      "date": "2026-07-14",
+      "time": "14:00",
+      "mode": "In-Person",
+      "location": "Counseling Wing, C-Block, Office 103",
+      "status": "Confirmed",
+      "notes": ""
+    },
+    {
+      "id": "S2",
+      "studentName": "Marcus Thorne",
+      "counselorName": "Dr. Aris Thorne",
+      "date": "2026-06-18",
+      "time": "11:00",
+      "mode": "In-Person",
+      "location": "Counseling Wing, Office 103",
+      "status": "Completed",
+      "notes": "Discussed study structures, pomodoro loops, and advised reaching out to prof."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "R1",
+      "category": "attendance",
+      "title": "Lectures Attendance Recovery",
+      "description": "Attend the next 4 consecutive Advanced Algorithms lectures to pull attendance past 75%.",
+      "priority": "high",
+      "actionLabel": "View Schedule"
+    },
+    {
+      "id": "R2",
+      "category": "action",
+      "title": "Submit Late DP Code",
+      "description": "Submit your code assignment today. Even with late penalty, it protects your grade curve.",
+      "priority": "high",
+      "actionLabel": "Submit Assignment"
+    }
+  ],
+  "followups": [
+    {
+      "id": "F1",
+      "name": "Marcus Thorne",
+      "idNumber": "ST-2026-98",
+      "contact": "marcus@university.edu",
+      "lastContact": "2026-07-01",
+      "riskLevel": "medium",
+      "category": "attendance",
+      "task": "Review weekly Algorithms class presence",
+      "isCompleted": false
+    },
+    {
+      "id": "F2",
+      "name": "Elena Rostova",
+      "idNumber": "ST-2026-101",
+      "contact": "elena.rostova@university.edu",
+      "lastContact": "2026-07-10",
+      "riskLevel": "high",
+      "category": "academics",
+      "task": "Follow up on mandatory peer tutoring attendance",
+      "isCompleted": false
+    }
+  ],
+  "predictionHistory": [
+    {
+      "id": "PRD-782910",
+      "studentName": "Aarav Sharma",
+      "date": "2026-07-01T10:30:00Z",
+      "riskScore": 78,
+      "riskLevel": "high",
+      "attendance": 64,
+      "cgpa": 5.8,
+      "counselingSessions": 3,
+      "modelVersion": "v3.4.1-fastapi"
+    },
+    {
+      "id": "PRD-521094",
+      "studentName": "Priya Patel",
+      "date": "2026-06-28T14:15:00Z",
+      "riskScore": 18,
+      "riskLevel": "low",
+      "attendance": 92,
+      "cgpa": 8.9,
+      "counselingSessions": 0,
+      "modelVersion": "v3.4.1-fastapi"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "LOG-3829",
+      "timestamp": "2026-09-08T12:59:08.456Z",
+      "type": "security",
+      "message": "Central server security credentials established.",
+      "user": "admin@university.edu",
+      "severity": "info"
+    }
+  ],
+  "settings": {
+    "general": {
+      "universityName": "Apex Tech University",
+      "academicYear": "2025-2026",
+      "currentSemester": "Spring"
+    },
+    "email": {
+      "smtpServer": "smtp.university.edu",
+      "smtpPort": 587,
+      "senderEmail": "noreply@university.edu"
+    },
+    "security": {
+      "inactivityTimeout": 15,
+      "mfaRequired": false,
+      "passwordExpiryDays": 90
+    },
+    "application": {
+      "predictionModel": "Gradient Boosting Machine v4.2",
+      "autoRetrainInterval": 30,
+      "riskThreshold": 65
+    }
+  },
+  "otps": {},
+  "counselorNotifications": [
+    {
+      "id": "CN-1",
+      "title": "Critical High-Risk Dropout Alert",
+      "message": "Chloe Dupont has crossed 90% threshold on ML risk engine due to lack of class attendance and missing midterm exams.",
+      "type": "high_risk",
+      "timestamp": "2026-07-12T01:30:00Z",
+      "isRead": false
+    },
+    {
+      "id": "CN-2",
+      "title": "Urgent Session Reminder",
+      "message": "Your crisis support session with Chloe Dupont starts in 2 hours (14:00 PM) in Office Room 2B.",
+      "type": "session_reminder",
+      "timestamp": "2026-07-12T05:00:00Z",
+      "isRead": false
+    },
+    {
+      "id": "CN-3",
+      "title": "New Student Assigned",
+      "message": "Marcus Thorne (Sports Merit, CSE) has been auto-assigned to your counselor cohort due to falling attendance (74.2%).",
+      "type": "assigned",
+      "timestamp": "2026-07-11T16:20:00Z",
+      "isRead": false
+    },
+    {
+      "id": "CN-4",
+      "title": "New Faculty Message",
+      "message": "Dr. Evelyn Vance left a critical remark on Elena Rostova's profile: 'Sliding rapidly, needs immediate physical counseling check.'",
+      "type": "faculty_msg",
+      "timestamp": "2026-07-10T12:05:00Z",
+      "isRead": true
+    }
+  ]
+}

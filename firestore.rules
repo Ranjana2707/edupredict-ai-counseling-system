@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Counseling Note Validation Helper
+    function isValidCounselingNote(data) {
+      return data.keys().hasAll(['id', 'studentId', 'studentName', 'authorId', 'authorName', 'authorRole', 'sessionDate', 'urgency', 'notes', 'type', 'createdAt', 'updatedAt'])
+        && data.keys().size() <= 16
+        && data.id is string && data.id.size() <= 128
+        && data.studentId is string && data.studentId.size() <= 128
+        && data.studentName is string && data.studentName.size() <= 128
+        && data.authorId is string && data.authorId.size() <= 128
+        && data.authorName is string && data.authorName.size() <= 128
+        && data.authorRole is string && data.authorRole.size() <= 64
+        && data.sessionDate is string && data.sessionDate.size() <= 64
+        && data.urgency is string && (data.urgency == 'low' || data.urgency == 'medium' || data.urgency == 'high' || data.urgency == 'critical')
+        && data.notes is string && data.notes.size() <= 10000
+        && data.type is string && data.type.size() <= 128
+        && (data.get('outcome', '') is string && data.get('outcome', '').size() <= 10000)
+        && (data.get('followUpDate', '') is string && data.get('followUpDate', '').size() <= 64)
+        && (data.get('status', 'open') is string && data.get('status', 'open').size() <= 64);
+    }
+
+    // Users Collection rules (used in AuthContext.tsx)
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || request.auth.token.role in ['admin', 'faculty', 'counselor']);
+      allow write: if isSignedIn() && (request.auth.uid == userId || request.auth.token.role == 'admin');
+    }
+
+    // Counseling Notes Collection rules
+    match /counseling_notes/{noteId} {
+      allow read: if isSignedIn() && (
+        resource.data.studentId == request.auth.uid ||
+        resource.data.authorId == request.auth.uid ||
+        request.auth.token.role in ['admin', 'faculty', 'counselor']
+      );
+      allow create: if isSignedIn() 
+        && isValidId(noteId) 
+        && isValidCounselingNote(incoming())
+        && incoming().id == noteId
+        && incoming().authorId == request.auth.uid
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      
+      allow update: if isSignedIn()
+        && isValidId(noteId)
+        && isValidCounselingNote(incoming())
+        && incoming().id == noteId
+        && incoming().authorId == request.auth.uid
+        && incoming().studentId == existing().studentId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['notes', 'type', 'urgency', 'outcome', 'sessionDate', 'followUpDate', 'status', 'updatedAt']);
+        
+      allow delete: if isSignedIn() && existing().authorId == request.auth.uid;
+    }
+  }
+}
