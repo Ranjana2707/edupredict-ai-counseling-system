@@ -2,7 +2,67 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useFacultyStudents } from '../../hooks/useFacultyData';
 import { predictionService } from '../../services/predictionService';
-import { PredictionInput, PredictionResult, PredictionHistoryItem, ModelPerformanceMetrics } from '../../types/prediction';
+import {
+  PredictionInput,
+  PredictionResult,
+  PredictionHistoryItem,
+  ModelPerformanceMetrics,
+  MLBranch,
+  ML_BRANCHES,
+  ML_SEMESTERS
+} from '../../types/prediction';
+
+// Unambiguous branch mapping to the 6 exact ML dataset categories
+function mapToMLBranch(repoDept?: string): { branch: MLBranch; isMapped: boolean } {
+  if (!repoDept) {
+    return { branch: 'Computer Science & Engineering', isMapped: false };
+  }
+  const clean = repoDept.trim().toLowerCase();
+
+  // Explicit guard: Do NOT map "Electrical & Physics Eng" to "Electrical Engineering"
+  if (clean.includes('physics')) {
+    return { branch: 'Computer Science & Engineering', isMapped: false };
+  }
+
+  if (clean === 'computer science & engineering' || clean === 'computer science' || clean === 'cse') {
+    return { branch: 'Computer Science & Engineering', isMapped: true };
+  }
+  if (clean === 'information technology' || clean === 'it') {
+    return { branch: 'Information Technology', isMapped: true };
+  }
+  if (clean === 'electronics & communication' || clean === 'electronics and communication' || clean === 'ece') {
+    return { branch: 'Electronics & Communication', isMapped: true };
+  }
+  if (clean === 'electrical engineering' || clean === 'ee') {
+    return { branch: 'Electrical Engineering', isMapped: true };
+  }
+  if (clean === 'mechanical engineering' || clean === 'me') {
+    return { branch: 'Mechanical Engineering', isMapped: true };
+  }
+  if (clean === 'civil engineering' || clean === 'ce') {
+    return { branch: 'Civil Engineering', isMapped: true };
+  }
+
+  return { branch: 'Computer Science & Engineering', isMapped: false };
+}
+
+// Convert "6th Semester", "Semester 6", or numeric values safely to integer 1-8
+function mapToMLSemester(repoSem?: string | number): number {
+  if (typeof repoSem === 'number' && repoSem >= 1 && repoSem <= 8) {
+    return repoSem;
+  }
+  if (typeof repoSem === 'string') {
+    const match = repoSem.match(/\b([1-8])(?:st|nd|rd|th)?\b/i);
+    if (match) {
+      const parsed = parseInt(match[1], 10);
+      if (parsed >= 1 && parsed <= 8) {
+        return parsed;
+      }
+    }
+  }
+  return 6; // Default to semester 6
+}
+
 import { RiskMeter } from './RiskMeter';
 import { ShapDashboard } from './ShapDashboard';
 import { RecommendationEngine } from './RecommendationEngine';
@@ -38,6 +98,8 @@ export function AIPredictionWorkspace() {
 
   // Manual Form States
   const [name, setName] = useState<string>('');
+  const [branch, setBranch] = useState<MLBranch>('Computer Science & Engineering');
+  const [semester, setSemester] = useState<number>(6);
   const [cgpa, setCgpa] = useState<number>(7.2);
   const [attendance, setAttendance] = useState<number>(82);
   const [backlogs, setBacklogs] = useState<number>(0);
@@ -80,6 +142,21 @@ export function AIPredictionWorkspace() {
       setCgpa(calculatedCgpa);
       
       setAttendance(Math.round(matched.attendance));
+
+      // Safe mapping for Branch (matches only verified ML categories)
+      const branchMapping = mapToMLBranch(matched.department);
+      if (branchMapping.isMapped) {
+        setBranch(branchMapping.branch);
+      } else {
+        setBranch('Computer Science & Engineering');
+        toast.warning(
+          `Department "${matched.department}" is not a recognized ML category. Defaulted to "Computer Science & Engineering".`
+        );
+      }
+
+      // Safe mapping for Semester (e.g. "6th Semester" -> 6)
+      const mappedSem = mapToMLSemester(matched.semester);
+      setSemester(mappedSem);
       
       // Infer plausible values for secondary factors based on risk profile
       if (matched.riskLevel === 'high' || matched.riskLevel === 'critical') {
@@ -117,10 +194,13 @@ export function AIPredictionWorkspace() {
     const inputData: PredictionInput = {
       studentId: selectedStudentId || undefined,
       name: name || 'Anonymous Student',
-      cgpa,
+      branch,
+      semester: Number(semester),
       attendance,
-      backlogs,
+      assignments: completedAssignments,
       completedAssignments,
+      cgpa,
+      backlogs,
       scholarship,
       financialStatus,
       behavioralScore,
@@ -186,13 +266,15 @@ export function AIPredictionWorkspace() {
 
     // Select a random profile template
     const profiles = [
-      { name: 'Kunal Sen (CSV Upload)', cgpa: 5.2, attendance: 64, backlogs: 2, completedAssignments: 58, scholarship: false, financialStatus: 'low' as const, behavioralScore: 4, counselingSessions: 3 },
-      { name: 'Riya Gupta (CSV Upload)', cgpa: 8.9, attendance: 95, backlogs: 0, completedAssignments: 98, scholarship: true, financialStatus: 'medium' as const, behavioralScore: 9, counselingSessions: 0 },
-      { name: 'Vikram Malhotra (CSV Upload)', cgpa: 6.9, attendance: 77, backlogs: 1, completedAssignments: 76, scholarship: false, financialStatus: 'medium' as const, behavioralScore: 6, counselingSessions: 1 }
+      { name: 'Kunal Sen (CSV Upload)', branch: 'Computer Science & Engineering' as MLBranch, semester: 5, cgpa: 5.2, attendance: 64, backlogs: 2, completedAssignments: 58, scholarship: false, financialStatus: 'low' as const, behavioralScore: 4, counselingSessions: 3 },
+      { name: 'Riya Gupta (CSV Upload)', branch: 'Information Technology' as MLBranch, semester: 4, cgpa: 8.9, attendance: 95, backlogs: 0, completedAssignments: 98, scholarship: true, financialStatus: 'medium' as const, behavioralScore: 9, counselingSessions: 0 },
+      { name: 'Vikram Malhotra (CSV Upload)', branch: 'Electronics & Communication' as MLBranch, semester: 6, cgpa: 6.9, attendance: 77, backlogs: 1, completedAssignments: 76, scholarship: false, financialStatus: 'medium' as const, behavioralScore: 6, counselingSessions: 1 }
     ];
 
     const chosen = profiles[Math.floor(Math.random() * profiles.length)];
     setName(chosen.name);
+    setBranch(chosen.branch);
+    setSemester(chosen.semester);
     setCgpa(chosen.cgpa);
     setAttendance(chosen.attendance);
     setBacklogs(chosen.backlogs);
@@ -315,10 +397,48 @@ export function AIPredictionWorkspace() {
                 />
               </div>
 
+              {/* Branch Selector (ML Feature 1) */}
+              <div className="space-y-1.5 select-none">
+                <label className="text-[9px] font-black uppercase text-outline flex items-center justify-between">
+                  <span>Branch</span>
+                  <span className="text-[9px] text-primary lowercase font-medium font-mono">ML Feature 1</span>
+                </label>
+                <select
+                  value={branch}
+                  onChange={(e) => setBranch(e.target.value as MLBranch)}
+                  className="w-full text-xs font-bold px-3 py-2 bg-surface-container border border-outline rounded-lg focus:outline-primary cursor-pointer"
+                >
+                  {ML_BRANCHES.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Semester Selector (ML Feature 2) */}
+              <div className="space-y-1.5 select-none">
+                <label className="text-[9px] font-black uppercase text-outline flex items-center justify-between">
+                  <span>Semester</span>
+                  <span className="text-[9px] text-primary lowercase font-medium font-mono">ML Feature 2 (1–8)</span>
+                </label>
+                <select
+                  value={semester}
+                  onChange={(e) => setSemester(parseInt(e.target.value, 10))}
+                  className="w-full text-xs font-bold px-3 py-2 bg-surface-container border border-outline rounded-lg focus:outline-primary cursor-pointer"
+                >
+                  {ML_SEMESTERS.map((s) => (
+                    <option key={s} value={s}>
+                      Semester {s}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Attendance slider */}
               <div className="space-y-1.5 select-none">
                 <div className="flex justify-between items-center text-[10px] font-black uppercase">
-                  <span className="text-outline">Class Attendance Rate</span>
+                  <span className="text-outline">Attendance (%)</span>
                   <span className="text-primary font-mono">{attendance}%</span>
                 </div>
                 <input
@@ -351,7 +471,7 @@ export function AIPredictionWorkspace() {
               {/* Completed Assignments */}
               <div className="space-y-1.5 select-none">
                 <div className="flex justify-between items-center text-[10px] font-black uppercase">
-                  <span className="text-outline">Assignments Completed</span>
+                  <span className="text-outline">Assignments Written (%)</span>
                   <span className="text-primary font-mono">{completedAssignments}%</span>
                 </div>
                 <input
@@ -547,12 +667,24 @@ export function AIPredictionWorkspace() {
 
                           <div className="space-y-2 font-semibold">
                             <div className="flex justify-between border-b border-outline-variant/10 pb-1.5">
+                              <span className="text-outline">Branch</span>
+                              <span className="text-on-surface font-black truncate max-w-[170px] text-right" title={branch}>{branch}</span>
+                            </div>
+                            <div className="flex justify-between border-b border-outline-variant/10 pb-1.5">
+                              <span className="text-outline">Semester</span>
+                              <span className="text-on-surface font-black">Semester {semester}</span>
+                            </div>
+                            <div className="flex justify-between border-b border-outline-variant/10 pb-1.5">
                               <span className="text-outline">CGPA Index</span>
                               <span className="text-on-surface font-black">{cgpa.toFixed(2)} / 10.0</span>
                             </div>
                             <div className="flex justify-between border-b border-outline-variant/10 pb-1.5">
                               <span className="text-outline">Class Attendance</span>
                               <span className="text-on-surface font-black">{attendance}%</span>
+                            </div>
+                            <div className="flex justify-between border-b border-outline-variant/10 pb-1.5">
+                              <span className="text-outline">Assignments Written</span>
+                              <span className="text-on-surface font-black">{completedAssignments}%</span>
                             </div>
                             <div className="flex justify-between border-b border-outline-variant/10 pb-1.5">
                               <span className="text-outline">Active Backlogs</span>
@@ -723,11 +855,14 @@ export function AIPredictionWorkspace() {
                           const fakeResult = await predictionService.simulateMLInference({
                             studentId: '',
                             name: hist.studentName,
+                            branch: branch || 'Computer Science & Engineering',
+                            semester: Number(semester) || 6,
                             attendance: hist.attendance,
+                            assignments: hist.attendance > 80 ? 92 : 68,
+                            completedAssignments: hist.attendance > 80 ? 92 : 68,
                             cgpa: hist.cgpa,
                             counselingSessions: hist.counselingSessions,
                             backlogs: hist.riskLevel === 'high' || hist.riskLevel === 'critical' ? 2 : 0,
-                            completedAssignments: hist.attendance > 80 ? 92 : 68,
                             behavioralScore: hist.riskLevel === 'low' ? 9 : 5,
                             financialStatus: hist.riskLevel === 'critical' ? 'low' : 'medium',
                             scholarship: hist.riskLevel === 'low'

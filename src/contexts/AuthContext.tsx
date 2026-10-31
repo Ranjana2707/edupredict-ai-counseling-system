@@ -8,12 +8,11 @@ import { signInWithPopup, onAuthStateChanged, signInAnonymously, sendPasswordRes
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 interface AuthContextType extends AuthState {
-  login: (email: string, password?: string, mockRole?: UserRole) => Promise<User>;
+  login: (email: string, password?: string) => Promise<User>;
   loginWithGoogle: () => Promise<User>;
   logout: () => void;
-  switchRole: (role: UserRole) => void;
   registerUser: (name: string, email: string, phone: string, role: UserRole, department: string) => Promise<void>;
-  forgotPassword: (email: string) => Promise<{ otp?: string; firebaseSent?: boolean }>;
+  forgotPassword: (email: string) => Promise<{ firebaseSent?: boolean }>;
   verifyOtp: (email: string, otp: string) => Promise<boolean>;
   resetPassword: (email: string, password: string) => Promise<void>;
   refreshToken: () => Promise<string>;
@@ -65,14 +64,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [state.isAuthenticated]);
 
-  const login = async (email: string, password?: string, mockRole?: UserRole): Promise<User> => {
+  const login = async (email: string, password?: string): Promise<User> => {
     setState((prev) => ({ ...prev, isLoading: true }));
 
     try {
       const response = await api.post('/api/auth/login', {
         email,
         password,
-        mockRole,
       });
 
       const { user, token, refreshToken: newRefreshToken } = response.data;
@@ -168,18 +166,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Also sync with express backend
       try {
         const response = await api.post('/api/auth/login-google', {
-          uid: firebaseUser.uid,
           email: firebaseUser.email,
           name: firebaseUser.displayName || 'Google User',
-          role: userData.role,
           avatarUrl: firebaseUser.photoURL,
         });
         const { token } = response.data;
         localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, token);
       } catch (err) {
-        console.warn('Backend google sync failed, generating mock token', err);
-        const token = `jwt_token_resolved_${user.role}_${Date.now()}`;
-        localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, token);
+        console.error('Backend google sync failed', err);
+        throw new Error('Google Sign-In could not be completed. Please try again.');
       }
 
       localStorage.setItem(LOCAL_STORAGE_KEYS.USER, JSON.stringify(user));
@@ -225,32 +220,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const switchRole = async (role: UserRole) => {
-    setState((prev) => ({ ...prev, isLoading: true }));
-    try {
-      const response = await api.post('/api/auth/switch-role', { role });
-      const { user, token } = response.data;
-
-      localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, token);
-      localStorage.setItem(LOCAL_STORAGE_KEYS.USER, JSON.stringify(user));
-
-      setState((prev) => ({
-        ...prev,
-        user,
-        isLoading: false,
-      }));
-
-      toast.success('Role Switched', {
-        description: `Now operating as ${user.name} (${role.toUpperCase()})`,
-      });
-    } catch (error: any) {
-      setState((prev) => ({ ...prev, isLoading: false }));
-      toast.error('Role Switch Failed', {
-        description: error.response?.data?.message || 'Could not perform role swapping.',
-      });
-    }
-  };
-
   const registerUser = async (
     name: string,
     email: string,
@@ -281,42 +250,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const forgotPassword = async (email: string): Promise<{ otp?: string; firebaseSent?: boolean }> => {
+  const forgotPassword = async (email: string): Promise<{ firebaseSent?: boolean }> => {
     setState((prev) => ({ ...prev, isLoading: true }));
-    let otpCode: string | undefined;
     let firebaseSent = false;
 
     try {
-      // 1. Dispatch recovery code from backend API
-      try {
-        const response = await api.post('/api/auth/forgot-password', { email });
-        if (response.data && response.data.otp) {
-          otpCode = response.data.otp;
-        }
-      } catch (err: any) {
-        console.warn('Backend recovery dispatch note:', err?.response?.data?.message || err.message);
-      }
+      await api.post('/api/auth/forgot-password', { email });
 
-      // 2. Dispatch real Firebase Auth reset email if configured
       try {
         await sendPasswordResetEmail(auth, email);
         firebaseSent = true;
       } catch (fbErr: any) {
-        // Safe fallback if account is institutional/mock or offline
         console.log('Firebase Auth reset note:', fbErr?.code || fbErr?.message);
       }
 
       setState((prev) => ({ ...prev, isLoading: false }));
-      
+
       const desc = firebaseSent
-        ? `Official reset link sent via Firebase, and recovery OTP dispatched for ${email}.`
+        ? `Official reset link sent via Firebase for ${email}.`
         : `Security verification OTP dispatched for ${email}.`;
 
       toast.success('Recovery Dispatched', {
         description: desc,
       });
 
-      return { otp: otpCode, firebaseSent };
+      return { firebaseSent };
     } catch (error: any) {
       setState((prev) => ({ ...prev, isLoading: false }));
       const errorMsg = error.response?.data?.message || 'Failed to dispatch recovery code';
@@ -368,7 +326,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const storedUser = localStorage.getItem(LOCAL_STORAGE_KEYS.USER);
       const email = storedUser ? JSON.parse(storedUser).email : '';
-      const rToken = localStorage.getItem('edupredict_refresh_token') || `mock_refresh_${Date.now()}`;
+      const rToken = localStorage.getItem('edupredict_refresh_token');
+
+      if (!rToken) {
+        throw new Error('No refresh token available.');
+      }
 
       const res = await api.post('/api/auth/refresh', {
         email,
@@ -380,7 +342,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (newRefreshToken) {
         localStorage.setItem('edupredict_refresh_token', newRefreshToken);
       }
-      console.log('JWT Token refreshed successfully.');
       return token;
     } catch (err) {
       console.error('Auto-refresh failed:', err);
@@ -431,7 +392,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         loginWithGoogle,
         logout,
-        switchRole,
         registerUser,
         forgotPassword,
         verifyOtp,

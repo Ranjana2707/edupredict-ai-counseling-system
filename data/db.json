@@ -521,6 +521,17 @@
   ],
   "predictionHistory": [
     {
+      "id": "PRD-150787",
+      "studentName": "Aarav Test Student",
+      "date": "2026-10-31T08:25:55.008Z",
+      "riskScore": 68,
+      "riskLevel": "high",
+      "attendance": 58,
+      "cgpa": 4.67,
+      "counselingSessions": 1,
+      "modelVersion": "v1.0.0-random-forest"
+    },
+    {
       "id": "PRD-782910",
       "studentName": "Aarav Sharma",
       "date": "2026-07-01T10:30:00Z",
@@ -544,6 +555,14 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "LOG-1793435155011-yn53j",
+      "timestamp": "2026-10-31T08:25:55.011Z",
+      "type": "prediction",
+      "message": "Dropout prediction generated for Aarav Test Student - Risk: high (68%)",
+      "user": "STU-TEST-1001",
+      "severity": "info"
+    },
     {
       "id": "LOG-3829",
       "timestamp": "2026-09-08T12:59:08.456Z",

@@ -1,0 +1,29 @@
+{
+    "model_name": "EduPredict Dropout Prediction Model",
+    "model_type": "Random Forest Classifier",
+    "model_version": "1.0",
+    "training_dataset": "AKTU_AI_Dropout_Prediction_Dataset.csv",
+    "training_samples": 8000,
+    "testing_samples": 2000,
+    "features": [
+        "Branch",
+        "Semester",
+        "Attendance (%)",
+        "Assignments Written (%)",
+        "CGPA",
+        "Backlogs"
+    ],
+    "target": "Dropout Status",
+    "target_encoding": {
+        "No": 0,
+        "Yes": 1
+    },
+    "test_metrics": {
+        "accuracy": 0.828,
+        "precision": 0.8756,
+        "recall": 0.6625,
+        "f1_score": 0.7543,
+        "roc_auc": 0.9076
+    },
+    "model_file": "dropout_prediction_model.pkl"
+}

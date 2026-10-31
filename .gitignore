@@ -30,3 +30,13 @@ yarn-error.log*
 *.swo
 .DS_Store
 Thumbs.db
+
+# Python & ML Virtual Environments
+ml-service/venv/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/

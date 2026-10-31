@@ -95,7 +95,10 @@ api.interceptors.response.use(
       try {
         const storedUser = localStorage.getItem(LOCAL_STORAGE_KEYS.USER);
         const email = storedUser ? JSON.parse(storedUser).email : '';
-        const refreshToken = localStorage.getItem('edupredict_refresh_token') || `mock_refresh_${Date.now()}`;
+        const refreshToken = localStorage.getItem('edupredict_refresh_token');
+        if (!refreshToken) {
+          throw new Error('No refresh token available.');
+        }
         
         // Execute real backend token refresh endpoint
         const refreshResponse = await axios.post(`${API_BASE_URL}api/auth/refresh`, {

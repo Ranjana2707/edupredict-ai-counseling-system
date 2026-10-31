@@ -1,11 +1,34 @@
+export type MLBranch =
+  | 'Computer Science & Engineering'
+  | 'Information Technology'
+  | 'Electronics & Communication'
+  | 'Electrical Engineering'
+  | 'Mechanical Engineering'
+  | 'Civil Engineering';
+
+export const ML_BRANCHES: MLBranch[] = [
+  'Computer Science & Engineering',
+  'Information Technology',
+  'Electronics & Communication',
+  'Electrical Engineering',
+  'Mechanical Engineering',
+  'Civil Engineering',
+];
+
+export const ML_SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8] as const;
+export type MLSemester = (typeof ML_SEMESTERS)[number];
+
 export interface PredictionInput {
   studentId?: string;
   name?: string;
   department?: string;
-  cgpa: number;
+  branch: MLBranch | string;
+  semester: number;
   attendance: number;
-  backlogs: number;
+  assignments: number;
   completedAssignments: number;
+  cgpa: number;
+  backlogs: number;
   scholarship: boolean;
   financialStatus: 'low' | 'medium' | 'high';
   behavioralScore: number; // 1-10
